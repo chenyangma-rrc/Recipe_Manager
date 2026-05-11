@@ -12,3 +12,23 @@ body {
 a {
   color: inherit;
 }
+
+header {
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+}
+
+nav {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
