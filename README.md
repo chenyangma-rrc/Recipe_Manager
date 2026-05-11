@@ -24,3 +24,5 @@ A full-stack recipe manager built with Next.js, React, PostgreSQL, Prisma, and A
 ```bash
 npm install
 npm run dev
+
+```
