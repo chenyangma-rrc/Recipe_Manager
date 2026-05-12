@@ -53,8 +53,8 @@ export default async function CategoryDetailsPage({
               <Link href={`/recipes/${recipe.id}`}>{recipe.title}</Link>
               <p>{recipe.description}</p>
               <p>
-                By {recipe.author.name ?? recipe.author.email} · Prep:{" "}
-                {recipe.prepTime} min · Cook: {recipe.cookTime} min
+                By {recipe.author.name ?? recipe.author.email} - Prep:{" "}
+                {recipe.prepTime} min - Cook: {recipe.cookTime} min
               </p>
             </li>
           ))}
@@ -63,4 +63,5 @@ export default async function CategoryDetailsPage({
     </main>
   );
 }
+
 
