@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { RecipeCard } from "@/components/RecipeCard/RecipeCard";
 import { prisma } from "@/lib/db/prisma";
 
 export default async function RecipesPage() {
@@ -23,33 +23,25 @@ export default async function RecipesPage() {
       {recipes.length === 0 ? (
         <p>No recipes found.</p>
       ) : (
-        <ul>
+        <div>
           {recipes.map((recipe) => (
-            <li key={recipe.id}>
-              <Link href={`/recipes/${recipe.id}`}>
-                <h2>{recipe.title}</h2>
-              </Link>
-
-              <p>{recipe.description}</p>
-
-              <p>
-                By {recipe.author.name ?? recipe.author.email} - Prep:{" "}
-                {recipe.prepTime} min - Cook: {recipe.cookTime} min
-              </p>
-
-              {recipe.recipeCategories.length > 0 ? (
-                <p>
-                  Categories:{" "}
-                  {recipe.recipeCategories
-                    .map(({ category }) => category.name)
-                    .join(", ")}
-                </p>
-              ) : null}
-            </li>
+            <RecipeCard
+              key={recipe.id}
+              id={recipe.id}
+              title={recipe.title}
+              description={recipe.description}
+              authorName={recipe.author.name ?? recipe.author.email}
+              prepTime={recipe.prepTime}
+              cookTime={recipe.cookTime}
+              categories={recipe.recipeCategories.map(
+                ({ category }) => category.name,
+              )}
+            />
           ))}
-        </ul>
+        </div>
       )}
     </main>
   );
 }
+
 
