@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CategoryBadge } from "@/components/CategoryBadge/CategoryBadge";
 import { prisma } from "@/lib/db/prisma";
 
 type RecipeDetailsPageProps = {
@@ -56,14 +57,15 @@ export default async function RecipeDetailsPage({
       </p>
 
       {recipe.recipeCategories.length > 0 ? (
-        <p>
-          Categories:{" "}
+        <div>
           {recipe.recipeCategories.map(({ category }) => (
-            <Link key={category.id} href={`/categories/${category.slug}`}>
-              {category.name}{" "}
-            </Link>
+            <CategoryBadge
+              key={category.id}
+              name={category.name}
+              slug={category.slug}
+            />
           ))}
-        </p>
+        </div>
       ) : null}
 
       <section>
@@ -98,4 +100,5 @@ export default async function RecipeDetailsPage({
     </main>
   );
 }
+
 

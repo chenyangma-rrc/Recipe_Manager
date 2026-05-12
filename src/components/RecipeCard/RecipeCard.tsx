@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CategoryBadge } from "@/components/CategoryBadge/CategoryBadge";
 
 type RecipeCardProps = {
   id: string;
@@ -7,7 +8,10 @@ type RecipeCardProps = {
   authorName: string;
   prepTime: number;
   cookTime: number;
-  categories: string[];
+  categories: {
+    name: string;
+    slug: string;
+  }[];
 };
 
 export function RecipeCard({
@@ -32,8 +36,17 @@ export function RecipeCard({
       </p>
 
       {categories.length > 0 ? (
-        <p>Categories: {categories.join(", ")}</p>
+        <div>
+          {categories.map((category) => (
+            <CategoryBadge
+              key={category.slug}
+              name={category.name}
+              slug={category.slug}
+            />
+          ))}
+        </div>
       ) : null}
     </article>
   );
 }
+

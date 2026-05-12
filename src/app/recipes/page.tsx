@@ -33,9 +33,10 @@ export default async function RecipesPage() {
               authorName={recipe.author.name ?? recipe.author.email}
               prepTime={recipe.prepTime}
               cookTime={recipe.cookTime}
-              categories={recipe.recipeCategories.map(
-                ({ category }) => category.name,
-              )}
+              categories={recipe.recipeCategories.map(({ category }) => ({
+                name: category.name,
+                slug: category.slug,
+              }))}
             />
           ))}
         </div>
@@ -43,5 +44,6 @@ export default async function RecipesPage() {
     </main>
   );
 }
+
 
 
