@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CategoryBadge } from "@/components/CategoryBadge/CategoryBadge";
+import { DirectionsList } from "@/components/DirectionsList/DirectionsList";
+import { IngredientList } from "@/components/IngredientList/IngredientList";
 import { prisma } from "@/lib/db/prisma";
 
 type RecipeDetailsPageProps = {
@@ -70,35 +72,16 @@ export default async function RecipeDetailsPage({
 
       <section>
         <h2>Ingredients</h2>
-
-        {recipe.ingredients.length === 0 ? (
-          <p>No ingredients listed.</p>
-        ) : (
-          <ul>
-            {recipe.ingredients.map((ingredient) => (
-              <li key={ingredient.id}>
-                {ingredient.amount} {ingredient.name}
-              </li>
-            ))}
-          </ul>
-        )}
+        <IngredientList ingredients={recipe.ingredients} />
       </section>
 
       <section>
         <h2>Directions</h2>
-
-        {recipe.directions.length === 0 ? (
-          <p>No directions listed.</p>
-        ) : (
-          <ol>
-            {recipe.directions.map((direction) => (
-              <li key={direction.id}>{direction.text}</li>
-            ))}
-          </ol>
-        )}
+        <DirectionsList directions={recipe.directions} />
       </section>
     </main>
   );
 }
+
 
 
