@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { RecipeList } from "@/components/RecipeList/RecipeList";
 import { prisma } from "@/lib/db/prisma";
 
 type CategoryDetailsPageProps = {
@@ -23,6 +24,11 @@ export default async function CategoryDetailsPage({
           recipe: {
             include: {
               author: true,
+              recipeCategories: {
+                include: {
+                  category: true,
+                },
+              },
             },
           },
         },
@@ -34,6 +40,19 @@ export default async function CategoryDetailsPage({
     notFound();
   }
 
+  const recipes = category.recipeCategories.map(({ recipe }) => ({
+    id: recipe.id,
+    title: recipe.title,
+    description: recipe.description,
+    authorName: recipe.author.name ?? recipe.author.email,
+    prepTime: recipe.prepTime,
+    cookTime: recipe.cookTime,
+    categories: recipe.recipeCategories.map(({ category }) => ({
+      name: category.name,
+      slug: category.slug,
+    })),
+  }));
+
   return (
     <main>
       <Link href="/categories">Back to categories</Link>
@@ -44,24 +63,10 @@ export default async function CategoryDetailsPage({
 
       <h2>Recipes</h2>
 
-      {category.recipeCategories.length === 0 ? (
-        <p>No recipes in this category yet.</p>
-      ) : (
-        <ul>
-          {category.recipeCategories.map(({ recipe }) => (
-            <li key={recipe.id}>
-              <Link href={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-              <p>{recipe.description}</p>
-              <p>
-                By {recipe.author.name ?? recipe.author.email} - Prep:{" "}
-                {recipe.prepTime} min - Cook: {recipe.cookTime} min
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
+      <RecipeList recipes={recipes} />
     </main>
   );
 }
+
 
 
